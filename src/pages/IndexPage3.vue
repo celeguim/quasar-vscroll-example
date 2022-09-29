@@ -108,7 +108,7 @@ const AsyncComponent = defineComponent({
   },
 });
 
-const size = ref(2);
+const size = ref(8);
 const allItems = Array(size.value)
   .fill(null)
   .map((_, index) => ({
