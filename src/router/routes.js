@@ -3,23 +3,18 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("src/pages/IndexPage1.vue") },
-    ],
-  },
-
-  {
-    path: "/scroll2",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      { path: "", component: () => import("src/pages/IndexPage2.vue") },
-    ],
-  },
-
-  {
-    path: "/scroll3",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      { path: "", component: () => import("src/pages/IndexPage3.vue") },
+      {
+        path: "/scroll1",
+        component: () => import("src/pages/IndexPage1.vue"),
+      },
+      {
+        path: "/scroll2",
+        component: () => import("src/pages/IndexPage2.vue"),
+      },
+      {
+        path: "/scroll3",
+        component: () => import("src/pages/IndexPage3.vue"),
+      },
     ],
   },
 

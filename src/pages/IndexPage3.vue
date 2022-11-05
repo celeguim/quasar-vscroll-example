@@ -1,33 +1,44 @@
 <template>
-  <div>
-    <div class="row q-gutter-y-md">
+  <q-page padding class="row justify-center">
+    <div>
       <q-btn label="scroll to 0" @click="scrollTo(0)" />
       <q-btn label="scroll to end" @click="scrollToEnd()" />
       <q-btn label="Add Item" @click="addItem()" />
     </div>
 
-    <q-scroll-area
-      ref="scrollArea"
-      id="virtual-scroll-area"
-      style="height: calc(100vh - 100px); overflow-x: hidden"
-      :virtual-scroll-item-size="20"
-    >
-      <q-virtual-scroll
-        ref="virtualScroll"
-        :items-size="size"
-        :items-fn="getItems"
-        separator
-        v-slot="{ item, index }"
-        scroll-target="virtual-scroll-area > .scroll"
+    <div>
+      <q-scroll-area
+        ref="scrollArea"
+        id="virtual-scroll-area"
+        :virtual-scroll-item-size="30"
+        style="width: 75vw; max-width: 75vw; height: 75vh; max-height: 75vh"
+        :content-active-style="{ backgroundColor: 'white' }"
+        :content-style="{ backgroundColor: '#C0C0C0' }"
+        :thumb-style="{
+          right: '4px',
+          borderRadius: '5px',
+          background: 'red',
+          width: '10px',
+          opacity: 10,
+        }"
       >
-        <async-component
-          :key="index"
-          :index="item.index"
-          :sent="item.sent"
-        ></async-component>
-      </q-virtual-scroll>
-    </q-scroll-area>
-  </div>
+        <q-virtual-scroll
+          ref="virtualScroll"
+          :items-size="size"
+          :items-fn="getItems"
+          separator
+          v-slot="{ item, index }"
+          scroll-target="virtual-scroll-area > .scroll"
+        >
+          <async-component
+            :key="index"
+            :index="item.index"
+            :sent="item.sent"
+          ></async-component>
+        </q-virtual-scroll>
+      </q-scroll-area>
+    </div>
+  </q-page>
 </template>
 
 <script>
@@ -163,24 +174,28 @@ export default {
     scrollToEnd() {
       console.log("scrollToEnd()");
 
-      const duration = 0;
+      const duration = 1;
 
-      setTimeout(() => {
-        scrollArea.value.getScrollTarget().scrollTo({
-          top: scrollArea.value.getScrollTarget().scrollHeight,
-          behavior: "smooth",
-          duration,
-        });
-      }, 1000);
+      scrollArea.value.setScrollPosition(
+        "vertical",
+        scrollArea.value.getScroll().verticalSize,
+        1
+      );
+
+      // setTimeout(() => {
+      //   scrollArea.value.getScrollTarget().scrollTo({
+      //     top: scrollArea.value.getScrollTarget().scrollHeight,
+      //     behavior: "smooth",
+      //     duration,
+      //   });
+      // }, 1);
     },
 
     getItems(from, size) {
       const items = [];
-
       for (let i = 0; i < size; i++) {
         items.push(allItems[from + i]);
       }
-
       return Object.freeze(items);
     },
   },
